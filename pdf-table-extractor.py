@@ -67,6 +67,7 @@ if __name__=="__main__":
   parser.add_argument('-c', '--csv', action='store_true', default=False, help='Output as csv')
   parser.add_argument('-m', '--merge', action='store_true', default=False, help='Output table as merged')
   parser.add_argument('-s', '--stream', action='store_true', default=False, help='Enable parse stream mode. Otherwise use lattice mode')
+  parser.add_argument('-g', '--noguess', action='store_true', default=False, help='Disable guess mode. You may need to use this for --stream')
 
 
   args = parser.parse_args()
@@ -78,7 +79,7 @@ if __name__=="__main__":
     print("[")
   for aPdfFile in args.args:
     if os.path.exists( aPdfFile ):
-      dfs = tabula.read_pdf( aPdfFile, lattice=not args.stream, stream=args.stream, silent=True, pages='all' )
+      dfs = tabula.read_pdf( aPdfFile, lattice=not args.stream, stream=args.stream, guess=not args.noguess, silent=True, pages='all' )
       for df in dfs:
         if args.json and not args.merge:
           print("[")
